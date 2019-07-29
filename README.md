@@ -26,6 +26,12 @@ sudo apt update
 ```
 sudo apt-get update
 ```
+만약 http://kr.archive.ubuntu.com에 연결할 수 없다는 오류 발생 시 아래 파일 수정
+```
+sudo vi /etc/apt/sources.list
+
+:%s/http:\/\/kr.archive.ubuntu.com\/ubuntu/http:\/\/ftp.daumkakao.com\/ubuntu/g
+```
 
 ### VirtualBox
 https://www.virtualbox.org/wiki/Downloads
