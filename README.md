@@ -155,7 +155,7 @@ stemcell 버전은 cf-deployment.yml 파일의 "stemcells" 버전을 입력한�
 ```
 export IAAS_INFO=warden-boshlite
 export STEMCELL_VERSION=$(bosh interpolate cf-deployment.yml --path=/stemcells/alias=default/version)
-bosh -e vbox upload-stemcell https://bosh.io/d/stemcells/bosh-${IAAS_INFO}-ubuntu-xenial-go_agent?v=${STEMCELL_VERSION}
+bosh -e vbox upload-stemcell https://bosh.io/d/stemcells/bosh-$IAAS_INFO-ubuntu-xenial-go_agent?v=$STEMCELL_VERSION
 ```
 ## Deploy CF
 
