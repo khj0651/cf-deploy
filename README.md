@@ -51,9 +51,9 @@ echo 'export PATH=$PATH:$GOROOT/bin' >> $HOME/.myenv
 . $HOME/.myenv
 ```
 
-### curl
+### git & curl
 ```
-sudo apt install curl
+sudo apt install git curl
 ```
 ### ruby2.3
 ```
