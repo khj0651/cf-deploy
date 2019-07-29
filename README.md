@@ -52,9 +52,9 @@ echo 'export PATH=$PATH:$GOROOT/bin' >> $HOME/.myenv
 ```
 
 ### curl
+```
 sudo apt install curl
 ```
-
 ### ruby2.3
 ```
 sudo apt-add-repository ppa:brightbox/ruby-ng
