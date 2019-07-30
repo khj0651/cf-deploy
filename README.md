@@ -215,6 +215,15 @@ cf api https://api.bosh-lite.com --skip-ssl-validation
 export CF_ADMIN_PASSWORD=$(bosh int <(credhub get -n /bosh-lite/cf/cf_admin_password --output-json) --path /value)
 cf auth admin $CF_ADMIN_PASSWORD
 ```
+```
+cf create-org org
+cf create-space space -o org
+cf target -o org -s space
+
+mkdir -p test-php; cd test-php
+echo "<?php phpinfo(); ?>" > index.php
+cf push test-php -b php_buildpack
+```
 
 ## Release Modify
 ```
