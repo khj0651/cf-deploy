@@ -65,10 +65,15 @@ sudo apt install ruby2.3
 
 ## Install CLI v2
 ### bosh
+#### ubuntu
 ```
 wget https://github.com/cloudfoundry/bosh-cli/releases/download/v5.5.1/bosh-cli-5.5.1-linux-amd64
 chmod +x bosh-cli-*
 sudo mv bosh-cli-* /usr/local/bin/bosh
+```
+#### Mac
+```
+brew install cloudfoundry/tap/bosh-cli
 ```
 check
 ```
@@ -78,11 +83,17 @@ version 5.5.1-7850ac98-2019-05-21T22:28:39Z
 Succeeded
 ```
 ### cf
+#### ubuntu
 ```
 wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
 echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
 sudo apt-get update
 sudo apt-get install cf-cli
+```
+#### Mac
+```
+brew tap cloudfoundry/tap
+brew install cf-cli
 ```
 check
 ```
