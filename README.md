@@ -18,7 +18,7 @@ sudo apt update
 - [Update cloud config](#update-cloud-config)   
 - [Upload stemcell](#upload-stemcell)   
 - [Deploy CF](#deploy-cf)  
-- [Set CredHub](#set-credhub)  
+- [CredHub-CLI](#credhub-cli)  
 - [Release Modify](#release-modify)  
 - [Commands](#commands)
 
@@ -168,29 +168,8 @@ export IAAS_INFO=warden-boshlite
 export STEMCELL_VERSION=$(bosh interpolate cf-deployment.yml --path=/stemcells/alias=default/version)
 bosh -e vbox upload-stemcell https://bosh.io/d/stemcells/bosh-$IAAS_INFO-ubuntu-xenial-go_agent?v=$STEMCELL_VERSION
 ```
-## Deploy CF
 
-```
-bosh -e vbox -d cf deploy cf-deployment.yml \
-   -o operations/bosh-lite.yml \
-   -v system_domain=bosh-lite.com
-```
-https://github.com/cloudfoundry/cf-deployment/blob/master/deployment-guide.md
-```
-cf api https://api.bosh-lite.com --skip-ssl-validation
-export CF_ADMIN_PASSWORD=$(bosh int <(credhub get -n /bosh-lite/cf/cf_admin_password --output-json) --path /value)
-cf auth admin $CF_ADMIN_PASSWORD
-```
-## Set CredHub
-```
-export BOSH_CA_CERT="$(bosh interpolate ~/deployments/vbox/creds.yml --path /director_ssl/ca)"
-
-export CREDHUB_SERVER=https://192.168.50.6:8844
-export CREDHUB_CLIENT=credhub-admin
-export CREDHUB_SECRET=$(bosh interpolate ~/deployments/vbox/creds.yml --path=/credhub_admin_client_secret)
-export CREDHUB_CA_CERT="$(bosh interpolate ~/deployments/vbox/creds.yml --path=/credhub_tls/ca )"$'\n'"$( bosh interpolate ~/deployments/vbox/creds.yml --path=/uaa_ssl/ca)"
-```
-### CredHub CLI
+## CredHub CLI
 #### Ubuntu
 Download release file
 > https://github.com/cloudfoundry-incubator/credhub-cli/releases
@@ -204,6 +183,15 @@ mv credhub /usr/local/bin
 ```
 brew install cloudfoundry/tap/credhub-cli
 ```
+### Set CredHub
+```
+export BOSH_CA_CERT="$(bosh interpolate ~/deployments/vbox/creds.yml --path /director_ssl/ca)"
+
+export CREDHUB_SERVER=https://192.168.50.6:8844
+export CREDHUB_CLIENT=credhub-admin
+export CREDHUB_SECRET=$(bosh interpolate ~/deployments/vbox/creds.yml --path=/credhub_admin_client_secret)
+export CREDHUB_CA_CERT="$(bosh interpolate ~/deployments/vbox/creds.yml --path=/credhub_tls/ca )"$'\n'"$( bosh interpolate ~/deployments/vbox/creds.yml --path=/uaa_ssl/ca)"
+```
 
 and retrieve credentials in CredHub
 ```
@@ -212,6 +200,20 @@ credhub find
 credhub find -n cf_admin_password
 credhub get -n <FULL_CREDENTIAL_NAME>
 credhub get -n /bosh-lite/cf/cf_admin_password
+```
+
+## Deploy CF
+
+```
+bosh -e vbox -d cf deploy cf-deployment.yml \
+   -o operations/bosh-lite.yml \
+   -v system_domain=bosh-lite.com
+```
+https://github.com/cloudfoundry/cf-deployment/blob/master/deployment-guide.md
+```
+cf api https://api.bosh-lite.com --skip-ssl-validation
+export CF_ADMIN_PASSWORD=$(bosh int <(credhub get -n /bosh-lite/cf/cf_admin_password --output-json) --path /value)
+cf auth admin $CF_ADMIN_PASSWORD
 ```
 
 ## Release Modify
